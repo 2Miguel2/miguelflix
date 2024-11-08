@@ -1,15 +1,24 @@
-document.querySelectorAll('.categoria-videos a').forEach(link => {
-    link.addEventListener('click', function (event) {
-        event.preventDefault(); // Impede o redirecionamento padrão
+document.addEventListener("DOMContentLoaded", function() {
+    const videoLinks = document.querySelectorAll(".categoria-videos a");
+    const iframe = document.getElementById("video-frame");
+    const titleElement = document.getElementById("video-title");
+    const descriptionElement = document.getElementById("video-description");
 
-        const videoId = this.getAttribute('data-video-id');
-        const iframe = document.querySelector('iframe');
+    videoLinks.forEach(link => {
+        link.addEventListener("click", function(event) {
+            event.preventDefault();
 
-        // Atualiza o src do iframe com o novo vídeo
-        iframe.src = `https://www.youtube.com/embed/${videoId}?si=4NwqMB3tusXL_QD8`;
+            // Obtém o ID do vídeo, título e descrição do link clicado
+            const videoId = link.getAttribute("data-video-id");
+            const videoTitle = link.getAttribute("data-title");
+            const videoDescription = link.getAttribute("data-description");
 
-        // Atualiza a imagem clicada para a que estava no iframe
-        const oldSrc = iframe.src.split('/embed/')[1].split('?')[0];
-        this.querySelector('img').src = `https://img.youtube.com/vi/${oldSrc}/maxresdefault.jpg`;
+            // Atualiza o iframe com o novo vídeo
+            iframe.src = `https://www.youtube.com/embed/${videoId}`;
+
+            // Atualiza o título e a descrição
+            titleElement.textContent = videoTitle;
+            descriptionElement.textContent = videoDescription;
+        });
     });
 });
